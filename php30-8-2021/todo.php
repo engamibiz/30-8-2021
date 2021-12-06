@@ -26,7 +26,8 @@
             font-size: 20px;
         }
         a{
-            color: color:#bbb;
+            color:#bbb;
+            text-decoration: none;
         }
         .completed .fa-check{
             color:green
@@ -54,7 +55,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form>
+            <form action="create.php" method="post">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -62,7 +63,7 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Task Name</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" name="taskName">
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="taskName">
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">Task Description</label>
@@ -71,13 +72,16 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary">Create</button>
             </div>
             </form>
         </div>
     </div>
 </div>
-<?php include 'tasks.php'; ?>
+<?php
+include 'tasks.php';
+session_start();
+?>
 <div class="container my-5 py-5">
     <?php foreach ($tasks as $task){ ?>
     <div class="row my-3">
@@ -98,7 +102,24 @@
     </div>
         <?php  } ?>
 </div>
+<?php if(isset($_SESSION['msg'])){ ?>
+<div class="position-fixed bottom-0 end-0 p-3">
+    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
 
+        <div class="toast-header">
+            <div style="width:10px;height: 10px;background-color: red;float: left; margin-right: 10px"></div>
+            <strong class="me-auto">Error</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <?= ($_SESSION['msg']) ?>
+        </div>
+    </div>
+</div>
+<?php
+
+    unset($_SESSION['msg']);
+} ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 </body>
